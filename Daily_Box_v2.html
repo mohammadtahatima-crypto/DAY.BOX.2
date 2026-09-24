@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Box — آزمون ساز</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#090d1a;--panel:#121a2d;--panel2:#18233c;--line:#2b3958;--text:#f6f7ff;--muted:#9ba9c8;--primary:#7c6cff;--accent:#5eead4;--danger:#fb7185}
+body{margin:0;background:radial-gradient(circle at 85% 0%,#27245b 0,transparent 34%),radial-gradient(circle at 10% 25%,#10404a 0,transparent 28%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
+.top{position:sticky;top:0;z-index:20;padding:15px 6%;background:rgba(9,13,26,.82);backdrop-filter:blur(15px);border-bottom:1px solid rgba(124,108,255,.2);display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:25px;font-weight:900}.brand span{color:var(--accent)}
+.top small{color:var(--muted)}
+.container{max-width:1120px;margin:auto;padding:35px 20px 70px}
+.hero,.card{background:linear-gradient(180deg,rgba(24,35,60,.9),rgba(13,19,35,.94));border:1px solid rgba(117,137,181,.2);border-radius:24px;padding:26px;margin-bottom:20px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:25px;background:linear-gradient(135deg,rgba(76,63,170,.7),rgba(18,91,95,.58),rgba(14,20,38,.95))}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.25;margin:7px 0}h2{margin-top:0}p{color:var(--muted)}
+.btn{background:linear-gradient(135deg,var(--primary),#9a72ff);color:#fff;border:0;border-radius:13px;padding:12px 18px;cursor:pointer;font-weight:800;box-shadow:0 9px 24px rgba(124,108,255,.25)}
+.btn.secondary{background:#26334f}.btn.danger{background:linear-gradient(135deg,#e95572,#fb7185)}
+.tabs{display:flex;gap:9px;margin-bottom:22px;padding:7px;background:rgba(18,26,45,.78);border:1px solid var(--line);border-radius:16px}
+.tab{flex:1;background:transparent;color:var(--muted);border:0;border-radius:11px;padding:11px;font-weight:800;cursor:pointer}.tab.active{background:linear-gradient(135deg,var(--primary),#6657dc);color:#fff}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}.form{display:grid;gap:11px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:13px;border:1px solid var(--line);background:#080d19;color:#fff;outline:none;font:inherit}
+textarea{min-height:120px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,108,255,.12)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 0;border-bottom:1px solid rgba(75,91,126,.35)}.row:last-child{border:0}
+.row small{display:block;color:var(--muted)}.badge{padding:5px 10px;border-radius:999px;background:rgba(94,234,212,.1);color:var(--accent);font-size:12px;font-weight:800}
+.hidden{display:none!important}.choices{display:grid;gap:10px}.choices label{padding:14px;border:1px solid var(--line);border-radius:13px;background:#0a101e;cursor:pointer}
+.timer{font-size:28px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums}.q{padding:18px 0;border-bottom:1px solid var(--line)}
+.result{margin-top:20px;padding:18px;border-radius:16px;background:rgba(124,108,255,.1);border:1px solid rgba(124,108,255,.25)}
+.stats{display:flex;gap:10px;flex-wrap:wrap}.stats b{padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.05)}
+.notice{padding:13px 15px;border-radius:13px;background:rgba(94,234,212,.08);border:1px solid rgba(94,234,212,.2);color:#c9fff6}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+@media(max-width:750px){.hero,.grid{display:block}.hero .btn{margin-top:15px;width:100%}.top{padding:13px 20px}.top small{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">Daily <span>Box</span></div><small>داشبورد · آزمون ساز · تنظیمات</small></header>
+<main class="container">
+
+<section class="hero">
+  <div><small>DAILY BOX</small><h1>آزمونت را بساز، زمان بده، نتیجه بگیر.</h1><p>ساختار آماده برای آزمون‌های زمان‌دار با پاسخ‌نامه و تصحیح خودکار.</p></div>
+  <button class="btn" onclick="show('builder',this)">ساخت آزمون</button>
+</section>
+
+<div class="tabs">
+<button class="tab active" onclick="show('home',this)">داشبورد</button>
+<button class="tab" onclick="show('builder',this)">آزمون ساز</button>
+<button class="tab" onclick="show('test',this)">آزمون</button>
+<button class="tab" onclick="show('settings',this)">تنظیمات</button>
+</div>
+
+<section id="home">
+<div class="grid">
+<div class="card">
+<h2>آزمون‌های من</h2>
+<div class="row"><div><b id="homeExamName">آزمون نمونه ریاضی</b><small id="homeExamMeta">۲ سؤال · زمان‌دار</small></div><button class="btn" onclick="show('test')">شروع</button></div>
+</div>
+<div class="card">
+<h2>وضعیت</h2>
+<div class="stats"><b>آزمون آماده</b><b>تصحیح خودکار</b><b>پاسخ‌نامه دستی</b></div>
+</div>
+</div>
+</section>
+
+<section id="builder" class="hidden">
+<div class="card">
+<h2>ساخت آزمون</h2>
+<div class="notice">فایل آزمون و پاسخ‌نامه را می‌توان در این بخش برای تبدیل به آزمون زمان‌دار وارد کرد. در این نسخه، ساخت نمونه با فرم زیر فعال است.</div>
+<div class="form" style="margin-top:15px">
+<input id="examName" placeholder="نام آزمون" value="آزمون نمونه ریاضی">
+<input id="examDuration" type="number" min="1" value="10" placeholder="مدت آزمون به دقیقه">
+<label>فایل آزمون <input id="examFile" type="file" accept=".txt,.csv,.json,.doc,.docx,.pdf"></label>
+<label>فایل پاسخ‌نامه <input id="answerFile" type="file" accept=".txt,.csv,.json,.doc,.docx,.pdf"></label>
+<textarea id="answerKey" placeholder="یا پاسخ‌نامه را اینجا وارد کن؛ مثال: 1=2, 2=4, 3=1"></textarea>
+</div>
+<div class="actions"><button class="btn" onclick="saveExam()">ذخیره آزمون</button><button class="btn secondary" onclick="loadDemo()">بارگذاری آزمون نمونه</button></div>
+</div>
+</section>
+
+<section id="test" class="hidden">
+<div class="card">
+<div class="row"><div><h2 style="margin:0">آزمون نمونه ریاضی</h2><small>۲ سؤال چهارگزینه‌ای</small></div><div class="timer" id="timer">10:00</div></div>
+<div id="questions">
+<div class="q"><h3>۱. حاصل ۲ + ۲ چیست؟</h3><div class="choices">
+<label><input type="radio" name="q1" value="1"> ۳</label><label><input type="radio" name="q1" value="2"> ۴</label><label><input type="radio" name="q1" value="3"> ۵</label><label><input type="radio" name="q1" value="4"> ۶</label>
+</div></div>
+<div class="q"><h3>۲. کدام گزینه عدد اول است؟</h3><div class="choices">
+<label><input type="radio" name="q2" value="1"> ۹</label><label><input type="radio" name="q2" value="2"> ۱۲</label><label><input type="radio" name="q2" value="3"> ۱۳</label><label><input type="radio" name="q2" value="4"> ۱۵</label>
+</div></div>
+</div>
+<div class="actions"><button class="btn" id="submitBtn" onclick="finishExam(false)">ثبت و پایان آزمون</button></div>
+<div id="res" class="result hidden"></div>
+</div>
+</section>
+
+<section id="settings" class="hidden">
+<div class="card"><h2>تنظیمات</h2><p>نسخه نمایشی Daily Box</p><button class="btn" onclick="speechSynthesis.speak(new SpeechSynthesisUtterance('سلام! خوش اومدی به Daily Box.'))">🔊 خوش‌آمدگویی صوتی</button></div>
+</section>
+</main>
+
+<script>
+let duration=10*60, remaining=duration, timerId=null, locked=false;
+let answerKey={q1:"2",q2:"3"};
+
+function show(id,b){
+ document.querySelectorAll('main section[id]').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ if(b)b.classList.add('active');
+ if(id==='test'&&!locked) startTimer();
+}
+function startTimer(){
+ clearInterval(timerId);
+ if(remaining<=0) remaining=duration;
+ updateTimer();
+ timerId=setInterval(()=>{remaining--;updateTimer();if(remaining<=0)finishExam(true)},1000);
+}
+function updateTimer(){
+ let m=Math.floor(remaining/60),s=remaining%60;
+ document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function finishExam(auto){
+ if(locked)return;
+ locked=true;clearInterval(timerId);
+ document.querySelectorAll('#questions input').forEach(x=>x.disabled=true);
+ document.getElementById('submitBtn').disabled=true;
+ let correct=0,wrong=0,blank=0,total=Object.keys(answerKey).length;
+ for(let i=1;i<=total;i++){
+   let a=document.querySelector('input[name="q'+i+'"]:checked');
+   if(!a)blank++; else if(a.value===answerKey['q'+i])correct++; else wrong++;
+ }
+ let percent=total?Math.round(correct/total*100):0;
+ document.getElementById('res').classList.remove('hidden');
+ document.getElementById('res').innerHTML='<h3>'+ (auto?'⏰ زمان آزمون تمام شد':'نتیجه آزمون') +'</h3><div class="stats"><b>درست: '+correct+'</b><b>غلط: '+wrong+'</b><b>نزده: '+blank+'</b><b>درصد: '+percent+'%</b></div>';
+ document.getElementById('timer').textContent='00:00';
+}
+function saveExam(){
+ const name=document.getElementById('examName').value.trim()||'آزمون جدید';
+ const min=Math.max(1,Number(document.getElementById('examDuration').value)||10);
+ duration=min*60;remaining=duration;locked=false;
+ document.getElementById('homeExamName').textContent=name;
+ document.getElementById('homeExamMeta').textContent='آزمون زمان‌دار · '+min+' دقیقه';
+ alert('آزمون ذخیره شد. برای نسخه واقعی، اتصال به ذخیره‌سازی و پردازش فایل لازم است.');
+ show('test');
+}
+function loadDemo(){document.getElementById('examName').value='آزمون نمونه ریاضی';document.getElementById('examDuration').value=10;document.getElementById('answerKey').value='1=2, 2=3';}
+function add(e){}
+</script>
+</body>
+</html>
